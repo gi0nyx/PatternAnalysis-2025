@@ -1,0 +1,171 @@
+# -------------------------------
+# OS (macOS)
+# -------------------------------
+dataset/
+
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# -------------------------------
+# Python bytecode / builds
+# -------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.env
+.env.*
+.venv/
+venv/
+env/
+ENV/
+.conda/
+conda_env/
+pyenv/
+.python-version
+
+# Tools / dependency managers
+# (uncomment if you want to ignore these lock files)
+# Pipenv:
+# Pipfile.lock
+# Poetry:
+# poetry.lock
+# Rye:
+# requirements.lock
+# PDM:
+# pdm.lock
+# UV:
+# uv.lock
+
+# -------------------------------
+# Testing / coverage / caching
+# -------------------------------
+.pytest_cache/
+.coverage
+.coverage.*
+.cache/
+nosetests.xml
+coverage.xml
+htmlcov/
+.tox/
+noxfile.pyc
+.hypothesis/
+
+# Type checkers / linters
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+
+# -------------------------------
+# Jupyter / notebooks
+# -------------------------------
+.ipynb_checkpoints/
+*.ipynb~
+# VSCode notebook state
+*.vscode.ipynb
+
+# -------------------------------
+# Editors / IDEs
+# -------------------------------
+.vscode/
+.vscode-test/
+.history/
+.idea/
+*.iml
+
+# -------------------------------
+# PyTorch / ML experiments
+# -------------------------------
+# Model weights / checkpoints
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.tflite
+*.mlmodel
+
+# Training logs and experiment dirs
+logs/
+log/
+runs/               # TensorBoard (e.g., SummaryWriter)
+lightning_logs/     # PyTorch Lightning
+wandb/              # Weights & Biases
+mlruns/             # MLflow
+checkpoints/
+outputs/
+artifacts/
+
+# Datasets / large data (adjust to your structure)
+data/
+datasets/
+.cache_dir/
+.tmp_data/
+
+# If you keep small configs in data/, whitelist them:
+# !data/README.md
+# !data/*.txt
+
+# -------------------------------
+# Environment / secrets
+# -------------------------------
+*.env
+*.env.*
+.envrc
+.secrets/
+secret*/
+*.key
+*.pem
+*.crt
+
+# -------------------------------
+# Notebooks: exported reports
+# -------------------------------
+*.nbconvert.ipynb
+*.html
+*.pdf
+
+# -------------------------------
+# Misc
+# -------------------------------
+# macOS thumbnail DBs sometimes appear in repos
+Thumbs.db
+Desktop.ini
+
+# If using Docker, uncomment:
+# docker-compose.override.yml
+# .docker/
+# */__pycache__/
