@@ -2,7 +2,7 @@
 # OS (macOS)
 # -------------------------------
 dataset/
-
+.pth
 .DS_Store
 .AppleDouble
 .LSOverride
