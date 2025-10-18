@@ -55,7 +55,7 @@ def main():
     val_loader = DataLoader(val_dataset, batch_size=CFG.batch_size, shuffle=False, num_workers=4)
 
     model_name = "convnextv2_tiny" 
-    model = timm.create_model(model_name, pretrained=True, num_classes=2)
+    model = timm.create_model(model_name, pretrained=False, num_classes=2)
     model = model.to(CFG.device)
 
     criterion = nn.CrossEntropyLoss()
