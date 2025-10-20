@@ -44,22 +44,4 @@ def display_random_patient_grid(df, num_patients=4):
     print("Patient grid image saved to 'patient_grid.png'")
 
 
-#display_random_patient_grid(preds_df, num_patients=4)
-
-
-def check_label_consistency(df):
-
-    # Group by patient_id and count the number of unique labels for each
-    label_counts = df.groupby('patient_ids')['label'].nunique()
-
-    # Filter for any patients that have more than one unique label
-    inconsistent_patients = label_counts[label_counts > 1]
-
-    if inconsistent_patients.empty:
-        print("✅ Success! All patient IDs have a consistent label across all rows.")
-    else:
-        print("⚠️ Warning! Found patients with inconsistent labels:")
-        for patient_id in inconsistent_patients.index:
-            print(f"  - Patient ID: {patient_id}")
-
-check_label_consistency(preds_df)
+display_random_patient_grid(preds_df, num_patients=4)
