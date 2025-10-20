@@ -11,7 +11,7 @@ Icon?
 ._*
 .Spotlight-V100
 .Trashes
-
+*.out
 # -------------------------------
 # Python bytecode / builds
 # -------------------------------

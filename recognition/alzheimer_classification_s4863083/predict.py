@@ -1,37 +1,65 @@
-import torch
 import pandas as pd
 import numpy as np
-from torch.utils.data import DataLoader
-from tqdm import tqdm
+from matplotlib import pyplot as plt
+import random
 from scipy.stats import mode
-from sklearn.metrics import accuracy_score
-from dataset import TrainDataset 
-from train import CFG, val_transform, calculate_patient_level_accuracy
-from modules import ConvNext, create_base
-device = CFG.device
-model_path = "convnext_base.pth"
-test_df = pd.read_csv('test_df.csv')
 
-model = create_base()
-model.load_state_dict(torch.load(model_path, map_location=device))
-model.to(device)
-model.eval()
+preds_df = pd.read_csv('preds.csv')
 
-test_dataset = TrainDataset(test_df, transform=val_transform)
-test_loader = DataLoader(test_dataset, batch_size=CFG.batch_size * 2, shuffle=False)
+def get_patient_id(idx):
+    id = idx[22:].split('_')[0]
+    return id
+preds_df['patient_ids'] = preds_df['file_path'].apply(get_patient_id)
 
-test_preds = []
-test_labels = []
-with torch.no_grad():
-    for images, labels in tqdm(test_loader, desc="Getting Slice Predictions"):
-        images = images.to(device)
-        outputs = model(images)
-        preds = outputs.argmax(dim=1).cpu().numpy()
-        test_preds.extend(preds)
-        test_labels.extend(labels)
+def display_random_patient_grid(df, num_patients=4):
+    patient_ids = df['patient_id'].unique()
+    
+    if len(patient_ids) < num_patients:
+        num_patients = len(patient_ids)
 
-test_slice_acc = accuracy_score(test_labels, test_preds)
-test_patient_acc = calculate_patient_level_accuracy(test_df, test_preds)
+    random_patient_ids = random.sample(list(patient_ids), num_patients)
 
-print(f"Slice-Level Accuracy: {test_slice_acc:.4f}")
-print(f"Patient-Level Accuracy (using Majority Vote): {test_patient_acc:.4f}")
+    grid_size = int(np.ceil(np.sqrt(num_patients)))
+    fig, axes = plt.subplots(grid_size, grid_size, figsize=(10, 10))
+    axes = axes.flatten()
+
+    for i, patient_id in enumerate(random_patient_ids):
+        ax = axes[i]
+        patient_df = df[df['patient_id'] == patient_id]
+
+        image = plt.imread(patient_df['file_path'].iloc[0])
+        
+        true_label = patient_df['label'].iloc[0]
+        pred_label = mode(patient_df['pred'].values, keepdims=False).mode
+        
+        ax.imshow(image)
+        ax.set_title(f"Patient ID: {patient_id}\nTrue: {true_label}, Pred: {pred_label}")
+        ax.axis('off')
+
+    for j in range(i + 1, len(axes)):
+        axes[j].axis('off')
+
+    plt.tight_layout()
+    plt.savefig('patient_grid.png')
+    print("Patient grid image saved to 'patient_grid.png'")
+
+
+#display_random_patient_grid(preds_df, num_patients=4)
+
+
+def check_label_consistency(df):
+
+    # Group by patient_id and count the number of unique labels for each
+    label_counts = df.groupby('patient_ids')['label'].nunique()
+
+    # Filter for any patients that have more than one unique label
+    inconsistent_patients = label_counts[label_counts > 1]
+
+    if inconsistent_patients.empty:
+        print("✅ Success! All patient IDs have a consistent label across all rows.")
+    else:
+        print("⚠️ Warning! Found patients with inconsistent labels:")
+        for patient_id in inconsistent_patients.index:
+            print(f"  - Patient ID: {patient_id}")
+
+check_label_consistency(preds_df)
