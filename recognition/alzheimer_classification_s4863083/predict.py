@@ -5,15 +5,14 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 from scipy.stats import mode
 from sklearn.metrics import accuracy_score
-import timm
 from dataset import TrainDataset 
 from train import CFG, val_transform, calculate_patient_level_accuracy
-
+from modules import ConvNext, create_base
 device = CFG.device
-model_path = "convnextv2_tiny.pth"
+model_path = "convnext_base.pth"
 test_df = pd.read_csv('test_df.csv')
 
-model = timm.create_model("convnextv2_tiny", pretrained=False, num_classes=2)
+model = create_base()
 model.load_state_dict(torch.load(model_path, map_location=device))
 model.to(device)
 model.eval()

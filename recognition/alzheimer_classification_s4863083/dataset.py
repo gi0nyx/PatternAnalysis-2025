@@ -1,6 +1,5 @@
 from albumentations.pytorch import ToTensorV2
 from albumentations import ImageOnlyTransform
-import timm
 from torch.utils.data import Dataset,DataLoader
 from torch.cuda.amp import autocast, GradScaler
 import cv2

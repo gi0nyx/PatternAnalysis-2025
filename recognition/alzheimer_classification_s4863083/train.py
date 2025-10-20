@@ -8,8 +8,8 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from torch.cuda.amp import autocast, GradScaler
-import timm
 from tqdm import tqdm
+from modules import ConvNext, create_base
 
 from albumentations import (
     Compose, RandomResizedCrop, Normalize, Resize
@@ -74,7 +74,7 @@ def main():
 
     model_name = "convnextv2_tiny" 
     
-    model = timm.create_model(model_name, pretrained=False, num_classes=2)
+    model = create_base()
     model = model.to(CFG.device)
 
     criterion = nn.CrossEntropyLoss()
@@ -136,7 +136,7 @@ def main():
         print(f"  Train -> Loss: {train_loss/len(train_loader):.4f} | Slice Acc: {train_slice_acc:.4f}")
         print(f"  Valid -> Loss: {val_loss/len(val_loader):.4f} | Slice Acc: {val_slice_acc:.4f} | Patient Acc: {val_patient_acc:.4f}\n")
 
-    torch.save(model.state_dict(), "convnextv2_tiny.pth")
+    torch.save(model.state_dict(), "convnext_base.pth")
     print("Training complete, model saved.")
 
 if __name__ == "__main__":
