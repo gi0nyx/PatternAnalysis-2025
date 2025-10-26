@@ -95,7 +95,7 @@ pip install -r requirements.txt
     ```
 
 4.  **Train and Evaluate the Model:**
-    Run `train.py` to start the training, validation, and final testing process. The script will save the best model weights (`convnext_base_best.pth`) and a CSV of test predictions (`preds.csv`).
+    Run `train.py` to start the training, validation, and final testing process. The script will save the latest model weights (`convnext_base_best.pth`) and a CSV of test predictions (`preds.csv`).
     ```bash
     python train.py
     ```
