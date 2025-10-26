@@ -1,3 +1,10 @@
+"""
+Description:
+    Implementation of the ConvNeXt architecture for image classification.
+    Includes DropPath regularization, custom LayerNorm supporting both
+    channels-first and channels-last formats, ConvNeXt building blocks,
+    and a model factory function for binary classification.
+"""
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

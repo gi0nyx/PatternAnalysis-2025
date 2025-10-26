@@ -1,3 +1,9 @@
+"""
+Description:
+    PyTorch Dataset class for Alzheimer's Disease MRI classification using a 2.5D slice-stacking approach.
+    Loads the center MRI slice and its adjacent slices (previous and next), stacks them into a 3-channel image,
+    applies optional augmentations, and returns the processed tensor with the corresponding label.
+"""
 from albumentations.pytorch import ToTensorV2
 from albumentations import ImageOnlyTransform
 from torch.utils.data import Dataset,DataLoader

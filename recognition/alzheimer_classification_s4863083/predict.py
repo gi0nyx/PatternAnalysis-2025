@@ -1,3 +1,8 @@
+"""
+Description:
+    Visualization script for model predictions on test MRI slices. Displays a random grid of patient images
+    with their true and predicted labels for qualitative evaluation.
+"""
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt

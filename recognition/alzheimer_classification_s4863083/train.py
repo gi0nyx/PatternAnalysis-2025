@@ -1,3 +1,10 @@
+"""
+Description:
+    Training script for Alzheimer's Disease MRI classification using ConvNeXt.
+    Includes data loading, StratifiedGroupKFold validation,
+    mixed-precision training with AdamW optimizer and cosine annealing scheduler,
+    Also generates final test predictions and saves results to CSV.
+"""
 import os
 import pandas as pd
 import numpy as np

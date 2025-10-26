@@ -1,3 +1,10 @@
+"""
+Description:
+    Utility script for preparing metadata from the ADNI MRI dataset.
+    Scans the dataset directories for AD and NC images, assigns labels,
+    extracts patient IDs from filenames, and generates
+    train and test CSV files for downstream training and evaluation.
+"""
 from glob import glob
 import pandas as pd
 import os
