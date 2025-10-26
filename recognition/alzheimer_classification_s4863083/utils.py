@@ -11,7 +11,7 @@ train_NC_path = glob(f'{train_dataset_path}/NC/*.jpeg')
 test_AD_path = glob(f'{test_dataset_path}/AD/*.jpeg')
 test_NC_path = glob(f'{test_dataset_path}/NC/*.jpeg')
 
-def extract_patient_id(path):
+def extract_patient_id(path): # extracts patient ids using filename
     filename = os.path.basename(path)
     return filename.split('_')[0]  
 
@@ -30,7 +30,7 @@ test_df = pd.DataFrame({
 
 test_df['patient_id'] = test_df['file_path'].apply(extract_patient_id)
 
-
+# random resample
 train_df = train_df.sample(frac=1, random_state=42).reset_index(drop=True)
 test_df = test_df.sample(frac=1, random_state=42).reset_index(drop=True)
 

@@ -6,6 +6,7 @@ import cv2
 import pandas as pd
 import numpy as np
 import warnings 
+import os
 warnings.filterwarnings('ignore')
 
 class TrainDataset(Dataset):
@@ -28,7 +29,7 @@ class TrainDataset(Dataset):
             slice_num_str, ext = slice_info.split('.')
             slice_num = int(slice_num_str)
 
-            prev_slice_path = f"{base_path}_{slice_num - 1}.{ext}"
+            prev_slice_path = f"{base_path}_{slice_num - 1}.{ext}" # find next and previous slice
             next_slice_path = f"{base_path}_{slice_num + 1}.{ext}"
 
             img_center = cv2.imread(center_path, cv2.IMREAD_GRAYSCALE)

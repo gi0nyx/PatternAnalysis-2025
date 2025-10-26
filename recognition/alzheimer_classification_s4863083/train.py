@@ -31,7 +31,7 @@ def set_seed(seed=42):
     os.environ["PYTHONHASHSEED"] = str(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
-
+# Define augmentations
 train_transform = Compose([
         RandomResizedCrop(size=(CFG.img_size, CFG.img_size), scale=(0.8, 1.0)),
         Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
@@ -68,8 +68,7 @@ def main():
     set_seed(42)
 
     df = pd.read_csv('train_df.csv')
-
-    sgkf = StratifiedGroupKFold(n_splits=CFG.n_splits, shuffle=True, random_state=42)
+    sgkf = StratifiedGroupKFold(n_splits=CFG.n_splits, shuffle=True, random_state=42) # validation strategy
 
     train_idx, val_idx = list(sgkf.split(df, df['label'], df['patient_id']))[0]
 
@@ -81,16 +80,16 @@ def main():
 
     train_loader = DataLoader(train_dataset, batch_size=CFG.batch_size, shuffle=True, num_workers=4, pin_memory=True)
     val_loader = DataLoader(val_dataset, batch_size=CFG.batch_size, shuffle=False, num_workers=4, pin_memory=True)
-    
-    model = create_base()
+   
+    model = create_base()  # create base version of convnext
     model = model.to(CFG.device)
 
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=CFG.lr, weight_decay=1e-5)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=CFG.epochs, eta_min=1e-6)
     scaler = GradScaler()
-
-    for epoch in range(CFG.epochs):
+    
+    for epoch in range(CFG.epochs): # train loop
         model.train()
         train_loss = 0.0
         train_epoch_preds = []
@@ -167,7 +166,7 @@ def main():
     test_preds = []
     test_labels = []
 
-    with torch.no_grad():
+    with torch.no_grad(): # test on test set
         for images, labels in tqdm(test_loader, desc="Getting Slice Predictions"):
             images = images.to(device)
             outputs = model(images)

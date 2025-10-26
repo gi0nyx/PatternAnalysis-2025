@@ -11,8 +11,8 @@ def get_patient_id(idx):
     return id
 preds_df['patient_ids'] = preds_df['file_path'].apply(get_patient_id)
 
-def display_random_patient_grid(df, num_patients=4):
-    patient_ids = df['patient_id'].unique()
+def display_random_patient_grid(df, num_patients=4): # displays random prediction images
+    patient_ids = df['patient_id'].unique() 
     
     if len(patient_ids) < num_patients:
         num_patients = len(patient_ids)
